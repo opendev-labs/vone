@@ -7,8 +7,10 @@ import { GITHUB_CLIENT_ID, GITHUB_OAUTH_URL, GITHUB_SCOPES } from '../../config'
 
 const SocialButton: React.FC<{ provider: string, icon: React.ReactNode, href?: string, onClick?: () => void }> = ({ provider, icon, href, onClick }) => {
     const Tag = href ? 'a' : 'button';
+    const buttonProps = href ? { href } : { type: 'button' as const, onClick };
+
     return (
-        <Tag href={href} onClick={onClick} className="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-void-line bg-void-line/50 hover:bg-void-card transition-colors">
+        <Tag {...buttonProps} className="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-void-line bg-void-line/50 hover:bg-void-card transition-colors cursor-pointer active:scale-95 duration-200 select-none">
             {icon}
             <span className="text-sm font-medium text-zinc-200">Continue with {provider}</span>
         </Tag>
@@ -74,7 +76,21 @@ export const LoginPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-3">
-                    <SocialButton provider="GitHub" icon={<GitHubIcon />} onClick={() => loginWithGitHub()} />
+                    <SocialButton
+                        provider="GitHub"
+                        icon={<GitHubIcon />}
+                        onClick={async () => {
+                            setError('');
+                            try {
+                                await loginWithGitHub();
+                            } catch (err: any) {
+                                let msg = 'Failed to sign in with GitHub.';
+                                if (err.code === 'auth/popup-closed-by-user') msg = 'Sign-in cancelled.';
+                                if (err.code === 'auth/cancelled-popup-request') msg = 'Popup blocked or cancelled.';
+                                setError(msg);
+                            }
+                        }}
+                    />
                     <SocialButton provider="GitLab" icon={<GitLabIcon />} onClick={handleGitLabLogin} />
                     <SocialButton provider="Gmail" icon={<GmailIcon />} onClick={handleGmailLogin} />
                 </div>
