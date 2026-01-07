@@ -26,7 +26,6 @@ import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { CLIPage } from './components/pages/CLIPage';
 import { GitHubCallbackHandler } from './components/auth/GitHubCallbackHandler';
 import { DeploymentPage } from './components/pages/DeploymentPage';
-import QvenvWrapper from './components/qvenv/QvenvWrapper';
 import { REAL_TEMPLATES } from './src/data/real_templates';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -94,10 +93,6 @@ const useSafeNavigation = () => {
     // Default to dashboard for empty or root hash
     if (parts[0] === '') {
         return { page: 'dashboard', projectId: null };
-    }
-
-    if (parts[0] === 'qvenv') {
-        return { page: 'qvenv', projectId: null };
     }
 
     return { page: parts[0], projectId: null };
@@ -320,7 +315,6 @@ const AppContent: React.FC = () => {
             case 'usage': return <UsagePage />;
             case 'cli': return <CLIPage projects={projects} onUpdateProject={handleUpdateProject} />;
             case 'deploy': return <DeploymentPage projectId={projectId || ''} />;
-            case 'qvenv': return <QvenvWrapper />;
             case '404': return <NotFoundPage />;
             default:
                 safeNavigate('/dashboard');

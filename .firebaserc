@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "void-v1"
+  },
+  "targets": {
+    "void-v1": {
+      "hosting": {
+        "void": [
+          "void-zero"
+        ],
+        "qvenv": [
+          "qvenv"
+        ]
+      }
+    }
+  }
+}

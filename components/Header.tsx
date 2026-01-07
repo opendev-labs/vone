@@ -215,7 +215,7 @@ export const Header: React.FC = () => {
               </div>
             </NavItem>
 
-            <a href="/#/qvenv" onClick={(e) => { e.preventDefault(); handleNav('/qvenv'); }} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+            <a href="https://qvenv.web.app" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
               HeroChat
             </a>
             <a href="/#/pricing" onClick={(e) => { e.preventDefault(); handleNav('/pricing'); }} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
