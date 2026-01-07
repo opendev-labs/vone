@@ -24,7 +24,7 @@ import { GlobalLoader } from './components/common/GlobalLoader';
 import { StatusFooter } from './components/common/StatusFooter';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { CLIPage } from './components/pages/CLIPage';
-
+import { GitHubCallbackHandler } from './components/auth/GitHubCallbackHandler';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // FIX: Create a component alias for motion.div to help TypeScript resolve the complex types from framer-motion.
@@ -97,13 +97,20 @@ const AppContent: React.FC = () => {
     const [projects, setProjects] = useLocalStorage<Project[]>('void_projects', mockProjects);
     const [connectedProvider, setConnectedProvider] = useLocalStorage<GitProvider | null>('void_git_provider', null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticating, setIsAuthenticating] = useState(false);
     const { page, projectId } = useSafeNavigation();
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1500); // Increased loading time for effect
+        // Check for GitHub OAuth callback code on initial load
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('code')) {
+            setIsAuthenticating(true);
+        } else {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1500); // Increased loading time for effect
+        }
     }, []);
 
     useEffect(() => {
@@ -114,7 +121,9 @@ const AppContent: React.FC = () => {
         }
     }, [isAuthenticated]);
 
-
+    if (isAuthenticating) {
+        return <GitHubCallbackHandler />;
+    }
 
     const handleUpdateProject = (updatedProject: Project) => {
         setProjects(prevProjects => prevProjects.map(p => p.id === updatedProject.id ? updatedProject : p));

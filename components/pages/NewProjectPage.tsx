@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import React, { useState, useMemo } from 'react';
 import type { Template, GitProvider, Repository, Workflow } from '../../types';
 import { mockTemplates, mockRepositories, mockWorkflows } from '../../constants';
 import { GitHubIcon, GitLabIcon, BitbucketIcon, SearchIcon, PuzzlePieceIcon, CubeIcon, GitBranchIcon } from '../common/Icons';
@@ -115,43 +114,6 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = ({
     setConnectedProvider
 }) => {
     const [activeView, setActiveView] = useState<ActiveView>('none');
-    const { gitHubAccessToken } = useAuth();
-    const [realRepos, setRealRepos] = useState<Repository[]>([]);
-    const [isLoadingRepos, setIsLoadingRepos] = useState(false);
-
-    useEffect(() => {
-        if (connectedProvider === 'GitHub' && gitHubAccessToken) {
-            setIsLoadingRepos(true);
-            fetch('https://api.github.com/user/repos?sort=updated&per_page=100', {
-                headers: {
-                    'Authorization': `Bearer ${gitHubAccessToken}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            })
-                .then(res => {
-                    if (!res.ok) throw new Error('Failed to fetch repos');
-                    return res.json();
-                })
-                .then(data => {
-                    const mappedRepos: Repository[] = data.map((repo: any) => ({
-                        id: repo.id.toString(),
-                        name: repo.name,
-                        owner: repo.owner.login,
-                        description: repo.description || '',
-                        updatedAt: new Date(repo.updated_at).toLocaleDateString(),
-                        provider: 'GitHub',
-                        url: repo.html_url
-                    }));
-                    // Filter out forks if desired, or keep them.
-                    setRealRepos(mappedRepos);
-                })
-                .catch(err => {
-                    console.error("Error fetching GitHub repos:", err);
-                    // Fallback to mock or empty
-                })
-                .finally(() => setIsLoadingRepos(false));
-        }
-    }, [connectedProvider, gitHubAccessToken]);
 
     const handleConnect = (provider: GitProvider) => {
         setConnectedProvider(provider);
@@ -217,14 +179,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = ({
                                             Disconnect
                                         </button>
                                     </div>
-                                    {isLoadingRepos ? (
-                                        <div className="p-8 text-center text-zinc-400">Loading repositories from GitHub...</div>
-                                    ) : (
-                                        <RepoList
-                                            repos={connectedProvider === 'GitHub' && realRepos.length > 0 ? realRepos : mockRepositories[connectedProvider]}
-                                            onImport={onImportRepository}
-                                        />
-                                    )}
+                                    <RepoList repos={mockRepositories[connectedProvider]} onImport={onImportRepository} />
                                 </div>
                             )}
                         </div>

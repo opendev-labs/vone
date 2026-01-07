@@ -7,10 +7,8 @@ import { GITHUB_CLIENT_ID, GITHUB_OAUTH_URL, GITHUB_SCOPES } from '../../config'
 
 const SocialButton: React.FC<{ provider: string, icon: React.ReactNode, href?: string, onClick?: () => void }> = ({ provider, icon, href, onClick }) => {
     const Tag = href ? 'a' : 'button';
-    const buttonProps = href ? { href } : { type: 'button' as const, onClick };
-
     return (
-        <Tag {...buttonProps} className="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-void-line bg-void-line/50 hover:bg-void-card transition-colors cursor-pointer active:scale-95 duration-200 select-none">
+        <Tag href={href} onClick={onClick} className="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-void-line bg-void-line/50 hover:bg-void-card transition-colors">
             {icon}
             <span className="text-sm font-medium text-zinc-200">Continue with {provider}</span>
         </Tag>
@@ -26,7 +24,7 @@ const VoidLogo = () => (
 
 
 export const LoginPage: React.FC = () => {
-    const { login, loginWithGitHub } = useAuth();
+    const { login } = useAuth();
     const [error, setError] = useState('');
 
     const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
@@ -76,24 +74,7 @@ export const LoginPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-3">
-                    <SocialButton
-                        provider="GitHub"
-                        icon={<GitHubIcon />}
-                        onClick={async () => {
-                            setError('');
-                            try {
-                                await loginWithGitHub();
-                            } catch (err: any) {
-                                let msg = `Sign-in failed: ${err.message} (${err.code})`;
-                                if (err.code === 'auth/popup-closed-by-user') msg = 'Sign-in cancelled by user.';
-                                if (err.code === 'auth/cancelled-popup-request') msg = 'Popup blocked or cancelled. Please allow popups for this site.';
-                                if (err.code === 'auth/configuration-not-found') msg = 'Firebase Auth not configured correctly. Check console.';
-                                if (err.code === 'auth/unauthorized-domain') msg = 'Domain not authorized in Firebase Console.';
-                                console.error('GitHub Auth Error:', err);
-                                setError(msg);
-                            }
-                        }}
-                    />
+                    <SocialButton provider="GitHub" icon={<GitHubIcon />} href={gitHubAuthUrl} />
                     <SocialButton provider="GitLab" icon={<GitLabIcon />} onClick={handleGitLabLogin} />
                     <SocialButton provider="Gmail" icon={<GmailIcon />} onClick={handleGmailLogin} />
                 </div>

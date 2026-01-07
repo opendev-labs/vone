@@ -18,11 +18,14 @@ const LoadingText: React.FC<{ text: string }> = ({ text }) => {
     )
 }
 
-export const GitHubCallbackHandler: React.FC<{ code: string | null }> = ({ code }) => {
+export const GitHubCallbackHandler: React.FC = () => {
     const { login } = useAuth();
     const [statusText, setStatusText] = useState("Authenticating with GitHub...");
 
     useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+
         if (code) {
             // --- This is where the real backend interaction would happen ---
             // In a real application:
@@ -58,7 +61,7 @@ export const GitHubCallbackHandler: React.FC<{ code: string | null }> = ({ code 
             }, 2000);
         }
 
-    }, [code, login]);
+    }, [login]);
 
     return (
         <div className="fixed inset-0 bg-void-bg flex flex-col items-center justify-center z-[100]">
