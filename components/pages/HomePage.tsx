@@ -1,114 +1,135 @@
 import React from 'react';
 import { safeNavigate } from '../../services/navigation';
 import { socialProofLogos } from '../../constants';
-import { SparklesIcon, CpuChipIcon, PuzzlePieceIcon, GitBranchIcon } from '../common/Icons';
+import { SparklesIcon, CpuChipIcon, PuzzlePieceIcon, GitBranchIcon, RocketLaunchIcon, GlobeAltIcon, ShieldCheckIcon } from '../common/Icons';
+import { motion } from 'framer-motion';
 
-const VoidBackground = () => (
-    <>
-      <div className="absolute inset-0 z-[-2] bg-black" />
-      <div 
-        className="absolute inset-0 z-[-1] opacity-40" 
-        style={{
-            backgroundImage: 'radial-gradient(circle at 25% 30%, #7DF9FF, transparent 30%), radial-gradient(circle at 75% 70%, #9b5cff, transparent 30%)',
-            animation: 'gradient-fade 10s ease-in-out infinite',
-            backgroundSize: '200% 200%',
-            filter: 'blur(120px)',
-        }}
-       />
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none" 
-        style={{
-          background: 'radial-gradient(circle at center, transparent 35%, #050507 70%)'
-        }}
-      />
-    </>
-  );
+const MotionDiv = motion.div;
 
-const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
-    <div className="bg-void-card/50 border border-void-line p-6 rounded-lg backdrop-blur-sm glow-border"
-        onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            e.currentTarget.style.setProperty('--glow-x', `${e.clientX - rect.left}px`);
-            e.currentTarget.style.setProperty('--glow-y', `${e.clientY - rect.top}px`);
-        }}
-    >
-        <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 flex items-center justify-center bg-void-accent/20 text-void-accent rounded-md">{icon}</div>
-            <h3 className="text-lg font-semibold text-white">{title}</h3>
-        </div>
-        <p className="text-sm text-zinc-400">{children}</p>
+const HeroSection = ({ onNav }: { onNav: (e: React.MouseEvent, path: string) => void }) => (
+    <div className="relative pt-20 pb-32 flex flex-col items-center text-center overflow-hidden">
+        {/* Abstract Background Gradient */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-void-accent/20 via-void-neon/10 to-transparent blur-[120px] rounded-full pointer-events-none z-0" />
+
+        <MotionDiv
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative z-10"
+        >
+            <span className="inline-block py-1 px-3 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-400 mb-6 backdrop-blur-md">
+                v1.0 is now live &rarr;
+            </span>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-zinc-500 mb-6 max-w-4xl mx-auto leading-[1.1]">
+                Your complete platform for the web.
+            </h1>
+            <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Void provides the frontend infrastructure and edge network to build, scale, and secure faster web applications.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+                <a
+                    href="/#/signup"
+                    onClick={(e) => onNav(e, '/signup')}
+                    className="h-12 px-8 rounded-full bg-white text-black font-bold text-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                >
+                    <RocketLaunchIcon className="w-5 h-5" />
+                    Start Deploying
+                </a>
+                <a
+                    href="/#/docs"
+                    onClick={(e) => onNav(e, '/docs')}
+                    className="h-12 px-8 rounded-full bg-zinc-900 text-white border border-zinc-800 font-medium text-lg hover:bg-zinc-800 transition-all flex items-center gap-2"
+                >
+                    Read the Docs
+                </a>
+            </div>
+        </MotionDiv>
     </div>
 );
 
+const FeatureGrid = () => (
+    <div className="py-24 border-t border-zinc-900">
+        <div className="max-w-6xl mx-auto px-6">
+            <MotionDiv
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="grid md:grid-cols-3 gap-8"
+            >
+                <div className="p-8 rounded-2xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-colors group">
+                    <div className="w-12 h-12 bg-black rounded-lg border border-zinc-800 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <GlobeAltIcon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3">Global Edge Network</h3>
+                    <p className="text-zinc-400 leading-relaxed">
+                        Deploy your content to our high-performance edge network. We handle the complexity of distribution and caching.
+                    </p>
+                </div>
+                <div className="p-8 rounded-2xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-colors group">
+                    <div className="w-12 h-12 bg-black rounded-lg border border-zinc-800 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <CpuChipIcon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3">Serverless Functions</h3>
+                    <p className="text-zinc-400 leading-relaxed">
+                        Write backend code that scales automatically with traffic. No servers to manage, monitor, or patch.
+                    </p>
+                </div>
+                <div className="p-8 rounded-2xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-colors group">
+                    <div className="w-12 h-12 bg-black rounded-lg border border-zinc-800 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <ShieldCheckIcon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3">DDoS Protection</h3>
+                    <p className="text-zinc-400 leading-relaxed">
+                        Enterprise-grade security built-in. Automatic SSL, custom firewalls, and instant threat mitigation.
+                    </p>
+                </div>
+            </MotionDiv>
+        </div>
+    </div>
+);
+
+const SocialProof = () => (
+    <div className="py-12 border-t border-b border-zinc-900 bg-black/50">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+            <p className="text-sm font-semibold text-zinc-500 mb-8 tracking-widest uppercase">Trusted by forward-thinking teams</p>
+            <div className="flex flex-wrap justify-center items-center gap-12 grayscale opacity-50">
+                {socialProofLogos.map(logo => (
+                    <img key={logo.name} src={logo.url} alt={logo.name} className="h-8 md:h-10 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
+const CallToAction = ({ onNav }: { onNav: (e: React.MouseEvent, path: string) => void }) => (
+    <div className="py-32 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-void-accent/5 pointer-events-none" />
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight">
+            Ready to deploy?
+        </h2>
+        <a
+            href="/#/signup"
+            onClick={(e) => onNav(e, '/signup')}
+            className="inline-block px-10 py-4 text-xl font-bold bg-white text-black rounded-full hover:scale-105 transition-transform"
+        >
+            Get Started for Free
+        </a>
+    </div>
+);
 
 export const HomePage: React.FC = () => {
-    
-    const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    const handleNav = (e: React.MouseEvent, path: string) => {
         e.preventDefault();
         safeNavigate(path);
     };
 
     return (
-        <div className="relative overflow-hidden -mx-4">
-             {/* Background Elements */}
-            <VoidBackground />
-            
-            <div className="relative z-10 container mx-auto px-4">
-                {/* Hero Section */}
-                <div className="min-h-[80vh] flex flex-col justify-center items-center text-center py-10">
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white drop-shadow-lg animate-fade-in-up">
-                        Develop. Preview. <span className="gradient-text">Ship.</span>
-                    </h1>
-                    <p className="mt-6 max-w-2xl text-lg text-zinc-400 animate-fade-in-up opacity-0 [animation-delay:0.3s]">
-                        Void is the ultimate serverless platform for developers, providing the tools to build and deploy high-performance web applications at the speed of light.
-                    </p>
-                    <div className="mt-12 flex items-center justify-center gap-x-6 animate-fade-in-up opacity-0 [animation-delay:0.6s]">
-                        <a
-                            href="/#/signup"
-                            onClick={(e) => handleNav(e, '/signup')}
-                            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black shadow-lg transition-all duration-300 hover:scale-105"
-                        >
-                            <span className="absolute -inset-full top-0 block -translate-y-full rounded-full bg-gradient-to-r from-void-accent to-void-neon transition-all duration-500 group-hover:translate-y-0"></span>
-                            <span className="relative">Start Deploying for Free</span>
-                        </a>
-                        <a href="/#/docs" onClick={(e) => handleNav(e, '/docs')} className="group text-sm font-semibold leading-6 text-white hover:text-zinc-300 transition-colors">
-                            View Docs <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">→</span>
-                        </a>
-                    </div>
-                </div>
-
-                {/* Social Proof Section */}
-                <div className="py-16 text-center">
-                    <p className="text-sm text-zinc-500 mb-6">TRUSTED BY THE WORLD'S MOST INNOVATIVE TEAMS</p>
-                    <div className="flex justify-center items-center gap-8 flex-wrap">
-                        {socialProofLogos.map(logo => (
-                            <img key={logo.name} src={logo.url} alt={logo.name} className="h-6 opacity-40 grayscale hover:opacity-80 hover:grayscale-0 transition-all" />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Features Section */}
-                <div className="py-20 max-w-5xl mx-auto">
-                    <div className="text-center mb-12">
-                         <h2 className="text-4xl font-bold tracking-tighter text-white">The complete toolkit for the modern web.</h2>
-                         <p className="mt-4 max-w-2xl mx-auto text-zinc-400">From hobby projects to enterprise-scale applications, Void provides the infrastructure you need to succeed.</p>
-                    </div>
-                     <div className="grid md:grid-cols-2 gap-6">
-                        <FeatureCard icon={<GitBranchIcon />} title="Instant Previews">
-                           Every Git push gets a unique, production-like URL. Share and test with your team before merging.
-                        </FeatureCard>
-                        <FeatureCard icon={<SparklesIcon />} title="Global Edge Network">
-                           Deploy your static assets and serverless functions worldwide for the lowest possible latency.
-                        </FeatureCard>
-                         <FeatureCard icon={<CpuChipIcon />} title="Serverless Compute">
-                           Run your backend code on demand without managing servers. Pay only for what you use.
-                        </FeatureCard>
-                         <FeatureCard icon={<PuzzlePieceIcon />} title="Managed Infrastructure">
-                           Connect managed databases, storage, and third-party integrations with a single click.
-                        </FeatureCard>
-                    </div>
-                </div>
-            </div>
+        <div className="bg-void-bg min-h-screen">
+            <HeroSection onNav={handleNav} />
+            <SocialProof />
+            <FeatureGrid />
+            <CallToAction onNav={handleNav} />
         </div>
     );
 };

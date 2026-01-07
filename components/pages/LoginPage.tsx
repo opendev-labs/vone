@@ -84,9 +84,12 @@ export const LoginPage: React.FC = () => {
                             try {
                                 await loginWithGitHub();
                             } catch (err: any) {
-                                let msg = 'Failed to sign in with GitHub.';
-                                if (err.code === 'auth/popup-closed-by-user') msg = 'Sign-in cancelled.';
-                                if (err.code === 'auth/cancelled-popup-request') msg = 'Popup blocked or cancelled.';
+                                let msg = `Sign-in failed: ${err.message} (${err.code})`;
+                                if (err.code === 'auth/popup-closed-by-user') msg = 'Sign-in cancelled by user.';
+                                if (err.code === 'auth/cancelled-popup-request') msg = 'Popup blocked or cancelled. Please allow popups for this site.';
+                                if (err.code === 'auth/configuration-not-found') msg = 'Firebase Auth not configured correctly. Check console.';
+                                if (err.code === 'auth/unauthorized-domain') msg = 'Domain not authorized in Firebase Console.';
+                                console.error('GitHub Auth Error:', err);
                                 setError(msg);
                             }
                         }}
