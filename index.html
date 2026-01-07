@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VOID | opendev-labs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              void: {
+                bg: "#050507",
+                card: "#0A0A0F",
+                line: "#14141c",
+                neon: "#7DF9FF",
+                accent: "#9b5cff"
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['Roboto Mono', 'monospace'],
+            },
+            animation: {
+              'shine': 'shine 2s linear infinite',
+              'gradient-fade': 'gradient-fade 6s ease-in-out infinite',
+              'orb-rotate': 'orb-rotate 20s linear infinite',
+              'fade-in-up': 'fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+              'stars-scroll': 'stars-scroll 180s linear infinite',
+              'grid-scroll': 'grid-scroll 60s linear infinite',
+              'logo-pulse': 'logo-pulse 4s ease-in-out infinite',
+            },
+            keyframes: {
+              'shine': {
+                '0%, 100%': { transform: 'translateX(-100%)' },
+                '50%': { transform: 'translateX(100%)' },
+              },
+              'gradient-fade': {
+                '0%, 100%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+              },
+              'orb-rotate': {
+                '0%': { transform: 'rotate(0deg)' },
+                '100%': { transform: 'rotate(360deg)' },
+              },
+              'fade-in-up': {
+                'from': {
+                  opacity: '0',
+                  transform: 'translateY(24px)'
+                },
+                'to': {
+                  opacity: '1',
+                  transform: 'translateY(0)'
+                },
+              },
+              'stars-scroll': {
+                'from': { 'background-position': '0 0' },
+                'to': { 'background-position': '0 -1000px' },
+              },
+              'grid-scroll': {
+                '0%': { 'background-position': '0% 50%' },
+                '100%': { 'background-position': '100% 50%' },
+              },
+              'logo-pulse': {
+                '0%, 100%': { fill: '#7DF9FF' },
+                '50%': { fill: '#FFFFFF' },
+              }
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050507; /* void-bg */
+      }
+      
+      .main-app-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-image: linear-gradient(rgba(20, 20, 28, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 20, 28, 0.5) 1px, transparent 1px);
+        background-size: 32px 32px;
+        animation: grid-scroll 30s linear infinite;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .authenticated .main-app-bg {
+        opacity: 1;
+      }
+
+
+      /* Refined scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #14141c; /* void-line */
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #27272a;
+      }
+       .neon-text { 
+            text-shadow: 0 0 8px #7DF9FF55, 0 0 20px #7DF9FF40; 
+        }
+        
+      /* Custom gradient text */
+      .gradient-text {
+        background: linear-gradient(90deg, #7DF9FF, #9b5cff, #7DF9FF);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient-fade 6s ease-in-out infinite;
+      }
+
+      /* Glow effect */
+       .glow-border {
+        position: relative;
+      }
+      .glow-border::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: radial-gradient(circle at var(--glow-x, 0%) var(--glow-y, 0%), #7DF9FF40, transparent 40%);
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+      }
+      .glow-border:hover::before {
+        opacity: 1;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.15.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.3.8/es/index.js"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-void-bg text-zinc-200 font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
