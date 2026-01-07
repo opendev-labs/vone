@@ -1,0 +1,130 @@
+:root {
+    --void-bg: #000000;
+    --void-card: #09090b;
+    --void-accent: #00f2ff;
+    /* Electric Cyan */
+    --void-accent-rgb: 0, 242, 255;
+    --void-neon: #06b6d4;
+
+    --void-line: rgba(255, 255, 255, 0.08);
+    --void-line-hover: rgba(255, 255, 255, 0.15);
+
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Outfit', 'Inter', sans-serif;
+
+    --glow-cyan: 0 0 20px rgba(0, 242, 255, 0.3);
+}
+
+body {
+    background-color: var(--void-bg);
+    color: white;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.025em;
+}
+
+/* Glass Panel Utility - The "Buttery Smooth" Effect */
+.glass-panel {
+    background: rgba(9, 9, 11, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--void-line);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #fff 0%, var(--void-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cyan-glow {
+    box-shadow: var(--glow-cyan);
+}
+
+.cyan-border-hover:hover {
+    border-color: var(--void-accent);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes pulse-cyan {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 242, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 242, 255, 0);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-cyan {
+    animation: pulse-cyan 2s infinite;
+}
+
+/* Scrollbar Polish */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--void-accent);
+}
+
+/* Selection */
+::selection {
+    background: rgba(0, 242, 255, 0.2);
+    color: var(--void-accent);
+}
+
+/* Custom Utilities */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

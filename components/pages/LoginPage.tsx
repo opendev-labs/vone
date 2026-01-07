@@ -4,6 +4,7 @@ import { GitHubIcon, GitLabIcon, GmailIcon } from '../common/Icons';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorMessage } from '../common/ErrorMessage';
 import { GITHUB_CLIENT_ID, GITHUB_OAUTH_URL, GITHUB_SCOPES } from '../../config';
+import { motion } from 'framer-motion';
 
 const SocialButton: React.FC<{ provider: string, icon: React.ReactNode, href?: string, onClick?: () => void }> = ({ provider, icon, href, onClick }) => {
     const Tag = href ? 'a' : 'button';
@@ -24,8 +25,21 @@ const VoidLogo = () => (
 
 
 export const LoginPage: React.FC = () => {
-    const { login } = useAuth();
+    const { login, loginWithGitHub } = useAuth();
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleGitHubLogin = async () => {
+        setIsLoading(true);
+        try {
+            await loginWithGitHub();
+        } catch (err: any) {
+            console.error(err);
+            setError('Failed to sign in with GitHub. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
         e.preventDefault();
@@ -61,61 +75,91 @@ export const LoginPage: React.FC = () => {
         safeNavigate('/verify-email');
     };
 
-    const gitHubAuthUrl = `${GITHUB_OAUTH_URL}?client_id=${GITHUB_CLIENT_ID}&scope=${encodeURIComponent(GITHUB_SCOPES)}`;
-
-
     return (
-        <div className="py-12 sm:py-20 flex items-center justify-center">
-            <div className="w-full max-w-sm p-8 bg-void-card border border-void-line rounded-lg">
-                <VoidLogo />
-                <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold tracking-tighter text-white">Log in to Void</h1>
-                    <p className="mt-2 text-zinc-400 text-sm">Welcome back.</p>
+        <div className="py-20 sm:py-32 flex items-center justify-center relative overflow-hidden">
+            {/* Ambient Background Glows */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-void-accent/5 blur-[120px] rounded-full pointer-events-none" />
+
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="w-full max-w-md p-10 glass-panel rounded-3xl relative z-10 shadow-2xl shadow-black"
+            >
+                <div className="text-center mb-10">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.1] mb-6 shadow-inner">
+                        <VoidLogo />
+                    </div>
+                    <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Welcome to Void</h1>
+                    <p className="text-zinc-500 text-sm">Deploy high-performance web apps in seconds.</p>
                 </div>
 
-                <div className="space-y-3">
-                    <SocialButton provider="GitHub" icon={<GitHubIcon />} href={gitHubAuthUrl} />
-                    <SocialButton provider="GitLab" icon={<GitLabIcon />} onClick={handleGitLabLogin} />
-                    <SocialButton provider="Gmail" icon={<GmailIcon />} onClick={handleGmailLogin} />
+                <div className="space-y-4">
+                    <button
+                        onClick={handleGitHubLogin}
+                        disabled={isLoading}
+                        className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-white text-black rounded-xl font-bold hover:bg-zinc-200 transition-all active:scale-[0.98] disabled:opacity-50"
+                    >
+                        <GitHubIcon className="w-5 h-5 text-black" />
+                        <span>Continue with GitHub</span>
+                    </button>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <button
+                            onClick={handleGitLabLogin}
+                            className="flex items-center justify-center gap-3 py-3 px-4 glass-panel rounded-xl text-zinc-300 hover:text-white hover:border-white/20 transition-all active:scale-[0.98]"
+                        >
+                            <GitLabIcon className="w-4 h-4" />
+                            <span className="text-xs font-bold">GitLab</span>
+                        </button>
+                        <button
+                            onClick={handleGmailLogin}
+                            className="flex items-center justify-center gap-3 py-3 px-4 glass-panel rounded-xl text-zinc-300 hover:text-white hover:border-white/20 transition-all active:scale-[0.98]"
+                        >
+                            <GmailIcon className="w-4 h-4" />
+                            <span className="text-xs font-bold">Google</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div className="my-6 flex items-center">
-                    <div className="flex-grow border-t border-void-line"></div>
-                    <span className="flex-shrink mx-4 text-xs text-zinc-500">OR</span>
-                    <div className="flex-grow border-t border-void-line"></div>
+                <div className="my-8 flex items-center">
+                    <div className="flex-grow border-t border-white/[0.08]"></div>
+                    <span className="flex-shrink mx-4 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">OR</span>
+                    <div className="flex-grow border-t border-white/[0.08]"></div>
                 </div>
 
                 <form className="space-y-4" onSubmit={handleEmailLogin}>
                     {error && <ErrorMessage message={error} />}
-                    <div>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className="w-full bg-void-bg border border-void-line py-2 px-3 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-void-neon"
-                            placeholder="you@example.com"
-                        />
+                    <div className="space-y-4">
+                        <div className="group">
+                            <input
+                                type="email"
+                                name="email"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] py-3.5 px-4 rounded-xl text-sm text-white focus:outline-none focus:border-void-accent/50 focus:ring-4 focus:ring-void-accent/5 transition-all placeholder:text-zinc-600"
+                                placeholder="Email address"
+                            />
+                        </div>
+                        <div className="group">
+                            <input
+                                type="password"
+                                name="password"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] py-3.5 px-4 rounded-xl text-sm text-white focus:outline-none focus:border-void-accent/50 focus:ring-4 focus:ring-void-accent/5 transition-all placeholder:text-zinc-600"
+                                placeholder="Password"
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            className="w-full bg-void-bg border border-void-line py-2 px-3 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-void-neon"
-                            placeholder="Password"
-                        />
-                    </div>
-                    <button type="submit" className="w-full bg-white text-black font-semibold py-2.5 px-4 hover:bg-zinc-200 transition-colors">
-                        Continue with Email
+                    <button type="submit" className="w-full py-4 px-4 glass-panel border-white/[0.1] hover:border-white/20 text-white font-bold rounded-xl transition-all active:scale-[0.98]">
+                        Sign in with Email
                     </button>
                 </form>
-                <p className="mt-6 text-center text-sm text-zinc-400">
+
+                <p className="mt-10 text-center text-xs text-zinc-500 font-medium">
                     Don't have an account?{' '}
-                    <a href="/#/signup" onClick={(e) => handleNav(e, '/signup')} className="text-void-neon hover:underline font-semibold">
-                        Sign up
+                    <a href="/#/signup" onClick={(e) => handleNav(e, '/signup')} className="text-void-accent hover:text-white transition-colors border-b border-void-accent/30 hover:border-white">
+                        Create an account for free
                     </a>
                 </p>
-            </div>
+            </motion.div>
         </div>
     );
 };

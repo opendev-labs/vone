@@ -23,20 +23,25 @@ export const GitHubCallbackHandler: React.FC = () => {
     const [statusText, setStatusText] = useState("Authenticating with GitHub...");
 
     useEffect(() => {
+        // Log the full URL for debugging purposes
+        console.log("Current URL:", window.location.href);
+
         const params = new URLSearchParams(window.location.search);
-        const code = params.get('code');
+        let code = params.get('code');
+
+        // Fallback: Check if code is in the hash or part of the full URL string manually
+        if (!code) {
+            const match = window.location.href.match(/[?&]code=([^&#]+)/);
+            if (match) {
+                code = match[1];
+            }
+        }
 
         if (code) {
-            // --- This is where the real backend interaction would happen ---
-            // In a real application:
-            // 1. Send the 'code' to your backend API.
-            //    e.g., fetch('/api/auth/github', { method: 'POST', body: JSON.stringify({ code }) })
-            // 2. Your backend exchanges the code for an access token with GitHub, using your Client ID and Client Secret.
-            // 3. Your backend uses the access token to fetch user data from the GitHub API.
-            // 4. Your backend returns the user data (e.g., name, email) to the frontend.
-            // 5. The frontend calls `login(userData)`.
+            // ... [Rest of the success logic]
+            setStatusText("Authenticating with GitHub...");
 
-            // We simulate this process with a timeout.
+            // Simulation of backend exchange
             setTimeout(() => {
                 setStatusText("Fetching user details...");
                 setTimeout(() => {
@@ -46,19 +51,20 @@ export const GitHubCallbackHandler: React.FC = () => {
                     };
                     login(mockUser);
 
-                    // Clean up the URL to remove the 'code' query parameter.
-                    // This prevents the code from being reused on a page refresh.
-                    window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+                    // Clean up URL
+                    const newUrl = window.location.pathname + window.location.hash;
+                    window.history.replaceState({}, document.title, newUrl);
 
                 }, 1500);
-            }, 2000);
+            }, 1000);
 
         } else {
             // Handle error case where no code is present
-            setStatusText("Authentication failed. Redirecting...");
+            setStatusText("Authentication failed. No code found.");
             setTimeout(() => {
+                // For debugging, we pause here a bit longer or redirect
                 window.location.href = window.location.pathname + '#/login';
-            }, 2000);
+            }, 3000);
         }
 
     }, [login]);
@@ -67,8 +73,14 @@ export const GitHubCallbackHandler: React.FC = () => {
         <div className="fixed inset-0 bg-void-bg flex flex-col items-center justify-center z-[100]">
             <AnimatedLoaderIcon size={64} strokeWidth={1.5} />
             <LoadingText text={statusText} />
+
+            {/* Debug Info */}
+            <div className="mt-8 text-xs text-zinc-600 font-mono max-w-lg break-all p-4 border border-zinc-800 rounded">
+                DEBUG URL: {window.location.href}
+            </div>
+
             <div className="absolute bottom-10 text-center text-xs text-zinc-600 max-w-md">
-                This is a simulation. In a real application, your browser would securely communicate with the Void backend to verify your GitHub identity without exposing any secrets.
+                This is a simulation. In a real application, your browser would securely communicate with the Void backend.
             </div>
         </div>
     );

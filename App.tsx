@@ -25,6 +25,9 @@ import { StatusFooter } from './components/common/StatusFooter';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { CLIPage } from './components/pages/CLIPage';
 import { GitHubCallbackHandler } from './components/auth/GitHubCallbackHandler';
+import { DeploymentPage } from './components/pages/DeploymentPage';
+import QvenvWrapper from './components/qvenv/QvenvWrapper';
+import { REAL_TEMPLATES } from './src/data/real_templates';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // FIX: Create a component alias for motion.div to help TypeScript resolve the complex types from framer-motion.
@@ -75,6 +78,10 @@ const useSafeNavigation = () => {
         return { page: 'projectDetail', projectId: parts[1] };
     }
 
+    if (parts[0] === 'deploy' && parts[1]) {
+        return { page: 'deploy', projectId: parts[1] };
+    }
+
     if (parts[0] === '404') {
         return { page: '404', projectId: null };
     }
@@ -89,6 +96,10 @@ const useSafeNavigation = () => {
         return { page: 'dashboard', projectId: null };
     }
 
+    if (parts[0] === 'qvenv') {
+        return { page: 'qvenv', projectId: null };
+    }
+
     return { page: parts[0], projectId: null };
 };
 
@@ -99,7 +110,7 @@ const AppContent: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticating, setIsAuthenticating] = useState(false);
     const { page, projectId } = useSafeNavigation();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user, createRepository, uploadFile } = useAuth();
 
     useEffect(() => {
         // Check for GitHub OAuth callback code on initial load
@@ -129,8 +140,33 @@ const AppContent: React.FC = () => {
         setProjects(prevProjects => prevProjects.map(p => p.id === updatedProject.id ? updatedProject : p));
     };
 
-    const handleDeployTemplate = (template: Template, projectName: string) => {
+    const handleDeployTemplate = async (template: Template, projectName: string, createRepo?: boolean, isPrivate?: boolean) => {
         const urlFriendlyName = projectName.toLowerCase().replace(/\s+/g, '-');
+
+        // Handle GitHub Repo Creation
+        if (createRepo && createRepository && uploadFile) {
+            try {
+                await createRepository(projectName, `Deployed from ${template.name}`, !!isPrivate);
+
+                // Determine which real template code to use
+                // Map template IDs or names to our REAL_TEMPLATES keys
+                let templateKey = 'default';
+                if (template.name.toLowerCase().includes('landing')) templateKey = 'landing-page';
+                else if (template.name.toLowerCase().includes('next')) templateKey = 'nextjs-starter';
+
+                const filesToUpload = REAL_TEMPLATES[templateKey] || REAL_TEMPLATES['default'];
+
+                // Upload each file
+                for (const [path, content] of Object.entries(filesToUpload)) {
+                    await uploadFile(projectName, path, content, `Initial commit: Add ${path}`);
+                }
+
+            } catch (err) {
+                console.error("Failed to create repo or upload files", err);
+                // Continue with deployment even if repo creation fails (or show error)
+            }
+        }
+
         const newDeployment: Deployment = {
             id: `dpl_${Date.now()}`,
             commit: `Initial deployment from ${template.name} template`,
@@ -283,12 +319,20 @@ const AppContent: React.FC = () => {
             case 'upgrade': return <UpgradePage />;
             case 'usage': return <UsagePage />;
             case 'cli': return <CLIPage projects={projects} onUpdateProject={handleUpdateProject} />;
+            case 'deploy': return <DeploymentPage projectId={projectId || ''} />;
+            case 'qvenv': return <QvenvWrapper />;
             case '404': return <NotFoundPage />;
             default:
                 safeNavigate('/dashboard');
                 return isAuthenticated ? <Dashboard projects={projects} onUpdateProject={handleUpdateProject} /> : <HomePage />;
         }
     };
+
+    // Special case for deployment page to avoid wrapper layout if desired, 
+    // or keep it consistent. The simulated page has its own full-screen look.
+    if (page === 'deploy') {
+        return <DeploymentPage projectId={projectId || ''} />;
+    }
 
     return (
         <div className="min-h-screen bg-void-bg font-sans flex flex-col">

@@ -1,6 +1,6 @@
 {
     "hosting": {
-        "site": "void-zero",
+        "site": "qvenv",
         "public": "dist",
         "ignore": [
             "firebase.json",

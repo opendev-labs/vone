@@ -4,12 +4,15 @@ import { AnimatedLoaderIcon } from './AnimatedLoaderIcon';
 
 interface ConfigureProjectFormProps {
     defaultName: string;
-    onDeploy: (projectName: string) => void;
+    onDeploy: (projectName: string, createRepo?: boolean, isPrivate?: boolean) => void;
     onCancel: () => void;
+    showRepoOptions?: boolean;
 }
 
-export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defaultName, onDeploy, onCancel }) => {
+export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defaultName, onDeploy, onCancel, showRepoOptions = false }) => {
     const [projectName, setProjectName] = useState(defaultName);
+    const [createRepo, setCreateRepo] = useState(false);
+    const [isPrivate, setIsPrivate] = useState(false);
     const [isDeploying, setIsDeploying] = useState(false);
     const urlFriendlyName = projectName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
 
@@ -19,7 +22,7 @@ export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defa
             setIsDeploying(true);
             // Simulate network delay before navigating
             setTimeout(() => {
-                onDeploy(projectName.trim());
+                onDeploy(projectName.trim(), createRepo, isPrivate);
             }, 1000);
         }
     };
@@ -36,7 +39,7 @@ export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defa
                     required
                     autoFocus
                 />
-                 <p className="text-xs text-zinc-500 mt-1">
+                <p className="text-xs text-zinc-500 mt-1">
                     Your project will be deployed to <code className="text-zinc-400">{urlFriendlyName}.void.app</code>
                 </p>
             </div>
@@ -48,6 +51,32 @@ export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defa
                     {isDeploying ? <AnimatedLoaderIcon size={20} className="text-black" /> : 'Deploy'}
                 </button>
             </div>
+
+            {showRepoOptions && (
+                <div className="mt-4 pt-4 border-t border-zinc-700 space-y-3">
+                    <label className="flex items-center gap-2 cursor-pointer group">
+                        <input
+                            type="checkbox"
+                            checked={createRepo}
+                            onChange={(e) => setCreateRepo(e.target.checked)}
+                            className="form-checkbox h-4 w-4 text-void-neon rounded border-zinc-600 bg-zinc-800 focus:ring-offset-zinc-900"
+                        />
+                        <span className="text-sm text-zinc-300 group-hover:text-white transition-colors">Create GitHub Repository</span>
+                    </label>
+
+                    {createRepo && (
+                        <label className="flex items-center gap-2 cursor-pointer group pl-6">
+                            <input
+                                type="checkbox"
+                                checked={isPrivate}
+                                onChange={(e) => setIsPrivate(e.target.checked)}
+                                className="form-checkbox h-4 w-4 text-void-neon rounded border-zinc-600 bg-zinc-800 focus:ring-offset-zinc-900"
+                            />
+                            <span className="text-sm text-zinc-400 group-hover:text-zinc-200 transition-colors">Private Repository</span>
+                        </label>
+                    )}
+                </div>
+            )}
         </form>
     );
 };
