@@ -11,7 +11,7 @@ export interface GenerationInfo {
 
 export interface Message {
   id: number;
-  role: 'user' | 'tars';
+  role: 'user' | 'vone';
   content: string;
   generationInfo?: GenerationInfo;
 }

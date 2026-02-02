@@ -7,7 +7,7 @@ let server;
 async function startLocalServer(port) {
     const app = express();
 
-    // Middleware to handle *.void.app routing
+    // Middleware to handle *.vone.app routing
     app.use((req, res, next) => {
         const host = req.headers.host || '';
         const subdomain = host.split('.')[0];
@@ -15,8 +15,8 @@ async function startLocalServer(port) {
         // Log incoming requests for debugging
         console.log(`Request: ${host}${req.url}`);
 
-        // If it's a *.void.app request, handle routing
-        if (host.includes('.void.app')) {
+        // If it's a *.vone.app request, handle routing
+        if (host.includes('.vone.app')) {
             req.voidSubdomain = subdomain;
         }
 
@@ -42,19 +42,19 @@ async function startLocalServer(port) {
             <head><title>Project Not Found</title></head>
             <body style="background: #050507; color: #7DF9FF; font-family: monospace; padding: 40px;">
               <h1>Project "${req.voidSubdomain}" not found</h1>
-              <p>Create this project in VOID Desktop to deploy it.</p>
+              <p>Create this project in vONE Desktop to deploy it.</p>
             </body>
           </html>
         `);
             }
         } else {
-            res.status(404).send('Not a VOID project URL');
+            res.status(404).send('Not a vONE project URL');
         }
     });
 
     return new Promise((resolve, reject) => {
         server = app.listen(port, '127.0.0.1', () => {
-            console.log(`VOID local server running on port ${port}`);
+            console.log(`vONE local server running on port ${port}`);
             resolve(server);
         }).on('error', reject);
     });

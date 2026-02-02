@@ -244,10 +244,10 @@ function App() {
     let history: Message[] = [];
     let currentFileTree: FileNode[] = [];
     const userMessage: Message = { id: Date.now(), role: 'user', content: prompt };
-    const tarsMessageId = Date.now() + 1;
-    const tarsPlaceholder: Message = { 
-        id: tarsMessageId, 
-        role: 'tars', 
+    const voneMessageId = Date.now() + 1;
+    const vonePlaceholder: Message = { 
+        id: voneMessageId, 
+        role: 'vone', 
         content: '', // Initially empty, will show "Thinking..." via component logic
         generationInfo: {
             status: 'generating',
@@ -261,7 +261,7 @@ function App() {
         const newSession: ChatSession = {
             id: newId,
             title: prompt.length > 25 ? prompt.substring(0, 22) + '...' : prompt,
-            messages: [userMessage, tarsPlaceholder],
+            messages: [userMessage, vonePlaceholder],
             fileTree: [],
             activeFile: null,
             lastUpdated: Date.now(),
@@ -279,7 +279,7 @@ function App() {
         }
          setSessions(prevSessions => prevSessions.map(s => {
             if (s.id === currentSessionId) {
-                return { ...s, messages: [...s.messages, userMessage, tarsPlaceholder], lastUpdated: Date.now() };
+                return { ...s, messages: [...s.messages, userMessage, vonePlaceholder], lastUpdated: Date.now() };
             }
             return s;
         }));
@@ -310,11 +310,11 @@ function App() {
 
                 if (newConversationText !== conversationText) {
                     conversationText = newConversationText;
-                    setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === tarsMessageId ? { ...m, content: conversationText } : m) } : s));
+                    setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === voneMessageId ? { ...m, content: conversationText } : m) } : s));
                 }
             } else if (!conversationText && !fullResponse.includes('"conversation"')) {
                 // If it's not looking like JSON, it could be an error message. Show it directly.
-                setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === tarsMessageId ? { ...m, content: fullResponse } : m) } : s));
+                setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === voneMessageId ? { ...m, content: fullResponse } : m) } : s));
             }
         }
         
@@ -339,14 +339,14 @@ function App() {
             if (jsonString) {
                 try {
                     const parsed = JSON.parse(jsonString);
-                    finalConversationalPart = parsed.conversation || "(TARS did not provide a conversational response.)";
+                    finalConversationalPart = parsed.conversation || "(vONE did not provide a conversational response.)";
                     if (parsed.files && Array.isArray(parsed.files)) {
                         generatedFileObjects = parsed.files.filter(f => f.path && f.action);
                     }
                 } catch (e) {
                     console.error("Failed to parse final JSON from response", e);
                     finalConversationalPart = "I tried to generate a response, but it wasn't in the correct format. The raw response is shown below.";
-                    setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === tarsMessageId ? { ...m, content: fullResponse } : m) } : s));
+                    setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, messages: s.messages.map(m => m.id === voneMessageId ? { ...m, content: fullResponse } : m) } : s));
                 }
             } else {
                 console.warn("No valid JSON found in the final response. Treating as pure conversation.");
@@ -354,7 +354,7 @@ function App() {
             }
         }
         
-        // Update the TARS message with the FINAL conversational part and file changes list
+        // Update the vONE message with the FINAL conversational part and file changes list
         setSessions(prev => prev.map(s => {
             if (s.id === currentSessionId) {
                  const finalGenerationFiles: GenerationFile[] = generatedFileObjects.map(f => ({
@@ -363,7 +363,7 @@ function App() {
                     status: 'generating',
                 }));
                 const messages = s.messages.map(msg => {
-                     if (msg.id === tarsMessageId) {
+                     if (msg.id === voneMessageId) {
                         return { 
                             ...msg, 
                             content: finalConversationalPart,
@@ -414,7 +414,7 @@ function App() {
             setSessions(prev => prev.map(s => {
                 if (s.id !== currentSessionId) return s;
                 const messages = s.messages.map(msg => {
-                    if (msg.id === tarsMessageId && msg.generationInfo) {
+                    if (msg.id === voneMessageId && msg.generationInfo) {
                         const files = msg.generationInfo.files.map(f => 
                             f.path === file.path ? { ...f, status: 'complete' as const } : f
                         );
@@ -438,7 +438,7 @@ function App() {
         setSessions(prevSessions => prevSessions.map(s => {
             if (s.id === currentSessionId) {
                 const messages = s.messages.map(msg => {
-                    if (msg.id === tarsMessageId && msg.generationInfo) {
+                    if (msg.id === voneMessageId && msg.generationInfo) {
                         return { ...msg, generationInfo: { ...msg.generationInfo, status: 'complete' as const } };
                     }
                     return msg;
@@ -466,7 +466,7 @@ function App() {
         console.error("Error streaming chat response:", error);
         setSessions(prevSessions => prevSessions.map(s => {
             if (s.id === currentSessionId) {
-                const messages = s.messages.map(m => m.id === tarsMessageId ? {...m, content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}`} : m);
+                const messages = s.messages.map(m => m.id === voneMessageId ? {...m, content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}`} : m);
                 return {...s, messages};
             }
             return s;

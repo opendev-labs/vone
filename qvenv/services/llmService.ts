@@ -3,7 +3,7 @@ import type { Message, FileNode, ModelConfig } from '../types';
 import { SUPPORTED_MODELS } from '../constants';
 import { streamGeminiResponse } from "./geminiService";
 
-const TARS_SYSTEM_INSTRUCTION_GENERIC = `You are TARS, an AI development assistant. Your response MUST be a single, valid JSON object and nothing else.
+const vONE_SYSTEM_INSTRUCTION_GENERIC = `You are vONE, an AI development assistant. Your response MUST be a single, valid JSON object and nothing else.
 DO NOT wrap the JSON in markdown backticks like \`\`\`json.
 DO NOT add any text before or after the JSON object.
 
@@ -30,9 +30,9 @@ MODIFICATION GUIDELINES:
 // Helper to convert app's message format to a generic format.
 const toGenericHistory = (messages: Message[]) => {
     return messages
-        .filter(m => (m.role === 'user' || (m.role === 'tars' && m.content)))
+        .filter(m => (m.role === 'user' || (m.role === 'vone' && m.content)))
         .map(m => ({
-            role: m.role === 'tars' ? 'assistant' : 'user',
+            role: m.role === 'vone' ? 'assistant' : 'user',
             content: m.content
         }));
 };
@@ -75,7 +75,7 @@ async function* streamOpenAICompatibleResponse(fullPrompt: string, history: Mess
     }
 
     const messages = [
-        { role: 'system', content: TARS_SYSTEM_INSTRUCTION_GENERIC },
+        { role: 'system', content: vONE_SYSTEM_INSTRUCTION_GENERIC },
         ...toGenericHistory(history),
         { role: 'user', content: fullPrompt }
     ];
@@ -143,7 +143,7 @@ async function* streamOpenAICompatibleResponse(fullPrompt: string, history: Mess
 
 
 async function* streamHuggingFaceResponse(fullPrompt: string, history: Message[], modelConfig: ModelConfig, apiKey: string): AsyncGenerator<{ text: string; }> {
-    const hfPrompt = `${TARS_SYSTEM_INSTRUCTION_GENERIC}\n\n**Task:**\n${fullPrompt}`;
+    const hfPrompt = `${vONE_SYSTEM_INSTRUCTION_GENERIC}\n\n**Task:**\n${fullPrompt}`;
     
     // NOTE: The free Hugging Face Inference API does not support streaming responses for text generation.
     // This function will wait for the full response before returning.

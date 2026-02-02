@@ -5,9 +5,9 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDvSmMDFZFHRwNrf1hMwfeQrOS-wvtc_hk",
-    authDomain: "void-v1.firebaseapp.com",
-    projectId: "void-v1",
-    storageBucket: "void-v1.firebasestorage.app",
+    authDomain: "vone-v1.firebaseapp.com",
+    projectId: "vone-v1",
+    storageBucket: "vone-v1.firebasestorage.app",
     messagingSenderId: "603444929770",
     appId: "1:603444929770:web:2ceef309f6550b1d522393",
     measurementId: "G-PWZ79LFXRX"

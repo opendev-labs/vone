@@ -16,7 +16,7 @@ YELLOW = "\033[93m"
 RESET = "\033[0m"
 
 def print_header(message):
-    print(f"{CYAN}[VOID]: {message}{RESET}")
+    print(f"{CYAN}[vONE]: {message}{RESET}")
 
 def create_sanctum():
     os.makedirs(PROJECTS_DIR, exist_ok=True)
@@ -52,7 +52,7 @@ def manifest():
         for project in projects:
             print(f"  - {project}")
     else:
-        print("  [VOID]: No projects found. The void is empty.")
+        print("  [vONE]: No projects found. The void is empty.")
 
 def delete_project(project_name):
     project_path = os.path.join(PROJECTS_DIR, project_name)
@@ -120,7 +120,7 @@ def echo():
 
 def show_help():
     help_text = f"""
-{GREEN}VOID - Hyper-Intelligent Virtual Environment Manager{RESET}
+{GREEN}vONE - Hyper-Intelligent Virtual Environment Manager{RESET}
 Commands:
   create sanc                 : Create Sanctum with a shared qvenv.
   install <repo-link>         : Clone and install a project into Sanctum.

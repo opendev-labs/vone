@@ -47,7 +47,7 @@ export const GitHubCallbackHandler: React.FC = () => {
                 setTimeout(() => {
                     const mockUser = {
                         name: 'GitHub User',
-                        email: 'user.from.github@void.app'
+                        email: 'user.from.github@vone.app'
                     };
                     login(mockUser);
 

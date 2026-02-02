@@ -40,7 +40,7 @@ function createWindow() {
                 isAuthenticated: true,
                 user: {
                     name: 'Desktop User',
-                    email: 'user@void.app',
+                    email: 'user@vone.app',
                     role: 'Owner'
                 }
             }));
@@ -56,7 +56,7 @@ function createWindow() {
     // Create application menu
     const template = [
         {
-            label: 'VOID',
+            label: 'vONE',
             submenu: [
                 { role: 'about' },
                 { type: 'separator' },
@@ -111,12 +111,12 @@ function createTray() {
 
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: 'VOID - opendev-labs',
+            label: 'vONE - opendev-labs',
             enabled: false
         },
         { type: 'separator' },
         {
-            label: 'Show VOID',
+            label: 'Show vONE',
             click: () => {
                 if (mainWindow) {
                     mainWindow.show();
@@ -132,7 +132,7 @@ function createTray() {
         }
     ]);
 
-    tray.setToolTip('VOID - Hyper-Intelligent Virtual Environment Manager');
+    tray.setToolTip('vONE - Hyper-Intelligent Virtual Environment Manager');
     tray.setContextMenu(contextMenu);
 
     tray.on('click', () => {
@@ -143,7 +143,7 @@ function createTray() {
 }
 
 app.whenReady().then(async () => {
-    // Start local server for *.void.app routing
+    // Start local server for *.vone.app routing
     try {
         await startLocalServer(serverPort);
         console.log(`Local server started on port ${serverPort}`);

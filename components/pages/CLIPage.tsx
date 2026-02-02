@@ -120,7 +120,7 @@ export const CLIPage: React.FC<{ projects: Project[], onUpdateProject: (p: Proje
                     branch: 'main',
                     timestamp: new Date().toISOString(),
                     status: DeploymentStatus.QUEUED,
-                    url: projectToDeploy.domains.find(d => d.isPrimary)?.name || `https://${projectToDeploy.name}.void.app`,
+                    url: projectToDeploy.domains.find(d => d.isPrimary)?.name || `https://${projectToDeploy.name}.vone.app`,
                 };
                 
                 const updatedProject = {

@@ -168,7 +168,7 @@ const AppContent: React.FC = () => {
             branch: 'main',
             timestamp: new Date().toISOString(),
             status: DeploymentStatus.QUEUED,
-            url: `https://${urlFriendlyName}.void.app`,
+            url: `https://${urlFriendlyName}.vone.app`,
         };
 
         const newProject: Project = {
@@ -177,7 +177,7 @@ const AppContent: React.FC = () => {
             framework: template.framework,
             lastUpdated: 'Just now',
             deployments: [newDeployment],
-            domains: [{ name: `https://${urlFriendlyName}.void.app`, isPrimary: true }],
+            domains: [{ name: `https://${urlFriendlyName}.vone.app`, isPrimary: true }],
             envVars: {},
             ...generateInitialProjectData(),
         };
@@ -194,7 +194,7 @@ const AppContent: React.FC = () => {
             branch: 'main',
             timestamp: new Date().toISOString(),
             status: DeploymentStatus.QUEUED,
-            url: `https://${urlFriendlyName}.void.app`,
+            url: `https://${urlFriendlyName}.vone.app`,
         };
 
         const newProject: Project = {
@@ -204,7 +204,7 @@ const AppContent: React.FC = () => {
             framework: 'Node.js',
             lastUpdated: 'Just now',
             deployments: [newDeployment],
-            domains: [{ name: `https://${urlFriendlyName}.void.app`, isPrimary: true }],
+            domains: [{ name: `https://${urlFriendlyName}.vone.app`, isPrimary: true }],
             envVars: {},
             ...generateInitialProjectData(),
         };
@@ -221,7 +221,7 @@ const AppContent: React.FC = () => {
             branch: 'main',
             timestamp: new Date().toISOString(),
             status: DeploymentStatus.QUEUED,
-            url: `https://${urlFriendlyName}.void.app`,
+            url: `https://${urlFriendlyName}.vone.app`,
         };
 
         const frameworkComponent = workflow.components.find(c => c.type === 'framework');
@@ -232,7 +232,7 @@ const AppContent: React.FC = () => {
             framework: frameworkComponent?.name || 'Workflow',
             lastUpdated: 'Just now',
             deployments: [newDeployment],
-            domains: [{ name: `https://${urlFriendlyName}.void.app`, isPrimary: true }],
+            domains: [{ name: `https://${urlFriendlyName}.vone.app`, isPrimary: true }],
             envVars: {},
             ...generateInitialProjectData(),
             storage: [],

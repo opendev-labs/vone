@@ -178,7 +178,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-10">
           <a href="/#/" onClick={(e) => { e.preventDefault(); handleNav('/'); }} className="flex items-center gap-2 group">
             <VoidLogo />
-            <span className="text-lg font-bold text-white tracking-widest font-mono">VOID</span>
+            <span className="text-lg font-bold text-white tracking-widest font-mono">vONE</span>
           </a>
 
           {/* Desktop Nav */}
@@ -262,7 +262,7 @@ export const Header: React.FC = () => {
                 onClick={(e) => { e.preventDefault(); handleNav('/signup'); }}
                 className="text-sm font-medium bg-white text-black px-4 py-2 rounded-md hover:bg-zinc-200 transition-colors"
               >
-                Launch VOID
+                Launch vONE
               </a>
             </div>
           )}

@@ -18,7 +18,7 @@ export const mockDeployments: Deployment[] = [
     branch: 'hotfix/db-connect',
     timestamp: '2024-07-20T15:00:00Z',
     status: DeploymentStatus.ERROR,
-    url: 'https://pulse-v2-api-e4f5g6h.void.app',
+    url: 'https://pulse-v2-api-e4f5g6h.vone.app',
   },
   {
     id: 'dpl_3',
@@ -26,7 +26,7 @@ export const mockDeployments: Deployment[] = [
     branch: 'dependabot/npm',
     timestamp: '2024-07-19T09:00:00Z',
     status: DeploymentStatus.CANCELED,
-    url: 'https://pulse-v2-api-i7j8k9l.void.app',
+    url: 'https://pulse-v2-api-i7j8k9l.vone.app',
   },
 ];
 
@@ -55,15 +55,15 @@ export const mockServerlessFunctions: ServerlessFunction[] = [
 ];
 
 export const mockTeamMembers: TeamMember[] = [
-  { id: 'user_1', name: 'You', email: 'you@void.app', role: TeamMemberRole.OWNER, avatarUrl: 'https://placehold.co/40x40/9b5cff/FFFFFF/png?text=Y' },
-  { id: 'user_2', name: 'Jane Doe', email: 'jane.doe@void.app', role: TeamMemberRole.MEMBER, avatarUrl: 'https://placehold.co/40x40/7DF9FF/000000/png?text=JD' },
+  { id: 'user_1', name: 'You', email: 'you@vone.app', role: TeamMemberRole.OWNER, avatarUrl: 'https://placehold.co/40x40/9b5cff/FFFFFF/png?text=Y' },
+  { id: 'user_2', name: 'Jane Doe', email: 'jane.doe@vone.app', role: TeamMemberRole.MEMBER, avatarUrl: 'https://placehold.co/40x40/7DF9FF/000000/png?text=JD' },
 ];
 
 export const mockActivityLog: ActivityEvent[] = [
   { id: 'act_1', type: 'Deployment', description: 'Deployed a1b2c3d to production', actor: 'You', timestamp: '2024-07-21T10:30:00Z' },
   { id: 'act_6', type: 'Integration', description: 'Connected Sentry integration', actor: 'You', timestamp: '2024-07-21T09:48:00Z' },
   { id: 'act_5', type: 'Storage', description: 'Created PostgreSQL database "pulse-db"', actor: 'You', timestamp: '2024-07-21T09:45:00Z' },
-  { id: 'act_2', type: 'Domain', description: 'Added domain pulse-api.void.app', actor: 'You', timestamp: '2024-07-21T09:15:00Z' },
+  { id: 'act_2', type: 'Domain', description: 'Added domain pulse-api.vone.app', actor: 'You', timestamp: '2024-07-21T09:15:00Z' },
   { id: 'act_3', type: 'Settings', description: 'Updated SECRET_KEY environment variable', actor: 'Jane Doe', timestamp: '2024-07-20T18:00:00Z' },
   { id: 'act_4', type: 'Deployment', description: 'Deployment e4f5g6h failed', actor: 'You', timestamp: '2024-07-20T15:00:00Z' },
 ];
@@ -108,7 +108,7 @@ export const mockProjects: Project[] = [
         branch: 'main',
         timestamp: new Date().toISOString(),
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://landing-page.void.app',
+        url: 'https://landing-page.vone.app',
       },
       {
         id: 'dpl_lp_2',
@@ -116,7 +116,7 @@ export const mockProjects: Project[] = [
         branch: 'main',
         timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://landing-page.void.app',
+        url: 'https://landing-page.vone.app',
       },
       {
         id: 'dpl_lp_3',
@@ -124,12 +124,12 @@ export const mockProjects: Project[] = [
         branch: 'dependabot',
         timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://landing-page-i7j8k9l.void.app',
+        url: 'https://landing-page-i7j8k9l.vone.app',
       },
     ],
     domains: [
-      { name: 'landing-page.void.app', isPrimary: true },
-      { name: 'landing-page-a1b2c3d.void.app', isPrimary: false, gitBranch: 'main' },
+      { name: 'landing-page.vone.app', isPrimary: true },
+      { name: 'landing-page-a1b2c3d.vone.app', isPrimary: false, gitBranch: 'main' },
     ],
     envVars: {
       'DATABASE_URL': 'postgres://user:pass@host:port/db',
@@ -156,7 +156,7 @@ export const mockProjects: Project[] = [
         branch: 'main',
         timestamp: '2024-07-20T18:45:00Z',
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://nova-landing-page.void.app',
+        url: 'https://nova-landing-page.vone.app',
       },
       {
         id: 'dpl_5',
@@ -164,14 +164,14 @@ export const mockProjects: Project[] = [
         branch: 'main',
         timestamp: '2024-07-19T12:00:00Z',
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://nova-landing-page.void.app',
+        url: 'https://nova-landing-page.vone.app',
       },
     ],
     domains: [
-      { name: 'nova-landing-page.void.app', isPrimary: true }
+      { name: 'nova-landing-page.vone.app', isPrimary: true }
     ],
     envVars: {
-      'PUBLIC_API_ENDPOINT': 'https://api.nova.void.app/graphql'
+      'PUBLIC_API_ENDPOINT': 'https://api.nova.vone.app/graphql'
     }
   },
   {
@@ -187,7 +187,7 @@ export const mockProjects: Project[] = [
         branch: 'schema-updates',
         timestamp: '2024-07-18T11:20:00Z',
         status: DeploymentStatus.ERROR,
-        url: 'https://quantum-analytics-db.void.app',
+        url: 'https://quantum-analytics-db.vone.app',
       },
       {
         id: 'dpl_7',
@@ -195,7 +195,7 @@ export const mockProjects: Project[] = [
         branch: 'schema-updates',
         timestamp: '2024-07-17T16:40:00Z',
         status: DeploymentStatus.DEPLOYED,
-        url: 'https://quantum-analytics-db.void.app',
+        url: 'https://quantum-analytics-db.vone.app',
       }
     ],
     domains: [],
@@ -232,7 +232,7 @@ export const successBuildLogs = [
   { level: LogLevel.INFO, message: 'Build successful.' },
   { level: LogLevel.SYSTEM, message: 'Deploying to edge network...' },
   { level: LogLevel.INFO, message: 'Propagation complete.' },
-  { level: LogLevel.SYSTEM, message: 'Deployment live at https://landing-page.void.app' },
+  { level: LogLevel.SYSTEM, message: 'Deployment live at https://landing-page.vone.app' },
 ];
 
 export const mockTemplates: Template[] = [

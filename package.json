@@ -1,6 +1,6 @@
 {
-  "name": "void",
-  "productName": "VOID",
+  "name": "vone",
+  "productName": "vONE",
   "description": "Hyper-Intelligent Virtual Environment Manager - opendev-labs",
   "version": "1.0.0",
   "main": "electron/main.js",
@@ -42,8 +42,8 @@
     "wait-on": "^9.0.3"
   },
   "build": {
-    "appId": "io.opendev-labs.void",
-    "productName": "VOID",
+    "appId": "io.opendev-labs.vone",
+    "productName": "vONE",
     "files": [
       "dist/**/*",
       "electron/**/*"

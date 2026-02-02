@@ -81,8 +81,8 @@ export const DeploymentPage: React.FC<DeploymentPageProps> = ({ projectId }) => 
                     )}
                 </div>
                 <div className="flex items-center gap-3 text-zinc-500">
-                    <span className="font-mono bg-black border border-zinc-800 px-3 py-1 rounded text-xs text-zinc-400">{`https://${projectName}.void.app`}</span>
-                    <a href={`https://${projectName}.void.app`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                    <span className="font-mono bg-black border border-zinc-800 px-3 py-1 rounded text-xs text-zinc-400">{`https://${projectName}.vone.app`}</span>
+                    <a href={`https://${projectName}.vone.app`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                         <ExternalLinkIcon className="w-4 h-4" />
                     </a>
                 </div>

@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { Message, ModelConfig } from '../types';
 
-const TARS_SYSTEM_INSTRUCTION_GEMINI = `You are TARS, an AI development assistant. When generating code:
+const vONE_SYSTEM_INSTRUCTION_GEMINI = `You are vONE, an AI development assistant. When generating code:
 
 CRITICAL FORMATTING RULES:
 - Your response MUST be valid JSON with this exact structure:
@@ -28,9 +28,9 @@ MODIFICATION GUIDELINES:
 
 const toGeminiHistory = (messages: Message[]) => {
     return messages
-        .filter(m => (m.role === 'user' || (m.role === 'tars' && m.content)))
+        .filter(m => (m.role === 'user' || (m.role === 'vone' && m.content)))
         .map(m => ({
-            role: m.role === 'tars' ? 'model' : 'user',
+            role: m.role === 'vone' ? 'model' : 'user',
             parts: [{ text: m.content }]
         }));
 };
@@ -52,7 +52,7 @@ export async function* streamGeminiResponse(fullPrompt: string, history: Message
         model: modelConfig.apiIdentifier,
         contents: contents,
         config: {
-            systemInstruction: TARS_SYSTEM_INSTRUCTION_GEMINI,
+            systemInstruction: vONE_SYSTEM_INSTRUCTION_GEMINI,
             responseMimeType: "application/json",
             responseSchema: {
                 type: Type.OBJECT,

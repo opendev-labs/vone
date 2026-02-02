@@ -141,8 +141,8 @@ export default function handler(req, res) {
         <H3 id="real-hosting">1. A Real Hosting Infrastructure</H3>
         <p>Vercel works because it owns the <code>vercel.app</code> domain, dynamically generates subdomains (e.g., <code>project.vercel.app</code>) via its backend, and integrates CI/CD pipelines. For Void, the requirements are similar:</p>
         <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Domain:</strong> A registered domain (e.g., <code>void.app</code>).</li>
-            <li><strong>Wildcard DNS:</strong> A DNS record like <code>*.void.app</code> pointing to the hosting server.</li>
+            <li><strong>Domain:</strong> A registered domain (e.g., <code>vone.app</code>).</li>
+            <li><strong>Wildcard DNS:</strong> A DNS record like <code>*.vone.app</code> pointing to the hosting server.</li>
             <li><strong>Backend Service:</strong> A service (e.g., Node.js, FastAPI) to manage projects and map them to subdomains.</li>
         </ul>
         <H3 id="url-generation">2. How URLs are Generated</H3>
@@ -155,18 +155,18 @@ export default function handler(req, res) {
         <H3 id="building-void">3. A Minimal Approach for Void</H3>
         <p>We can achieve this using a free service like Cloudflare Pages or Netlify. The process would be:</p>
         <ul className="list-disc pl-6 space-y-2">
-            <li>Point the wildcard DNS record (<code>*.void.app</code>) to Cloudflare Pages.</li>
+            <li>Point the wildcard DNS record (<code>*.vone.app</code>) to Cloudflare Pages.</li>
             <li>Each new deployment would automatically be served on a new subdomain. For example, deploying a project named <code>landing-page</code> would make it available at:</li>
         </ul>
-        <CodeBlock>{`https://landing-page.void.app`}</CodeBlock>
+        <CodeBlock>{`https://landing-page.vone.app`}</CodeBlock>
 
         <H3 id="architecture-diagram">4. High-Level Architecture</H3>
         <p>The flow would look like this:</p>
         <CodeBlock>{`User Uploads Project → Void Backend → Store Files → Deploy to CDN
                              ↓
-          DNS / Wildcard Subdomain Config for void.app
+          DNS / Wildcard Subdomain Config for vone.app
                              ↓
-     Project Available at https://project.void.app`}</CodeBlock>
+     Project Available at https://project.vone.app`}</CodeBlock>
         
         <H2 id="tech-stack">Core Tech Stack</H2>
         <p>Void is built on a minimal but powerful set of technologies to ensure speed, reliability, and an excellent developer experience. Our philosophy is to use best-in-class, open-source tools that are both modern and battle-tested. The core principles of our stack include:</p>
@@ -194,7 +194,7 @@ export default function handler(req, res) {
         <H3 id="api">API Reference</H3>
         <p>Our REST API provides programmatic access to your projects, deployments, and domains. Generate an API token from your account settings to get started.</p>
         <p><strong>Example: List Projects</strong></p>
-        <CodeBlock>{`curl "https://api.void.app/v1/projects" \\
+        <CodeBlock>{`curl "https://api.vone.app/v1/projects" \\
   -H "Authorization: Bearer YOUR_API_TOKEN"`}</CodeBlock>
 
     </article>

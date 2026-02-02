@@ -11,7 +11,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const { role, content, generationInfo } = message;
   const isUser = role === 'user';
   
-  const isTarsGenerating = role === 'tars' && generationInfo?.status === 'generating';
+  const isTarsGenerating = role === 'vone' && generationInfo?.status === 'generating';
   // "Thinking" phase is when generation has started, but no conversational content or file list has arrived yet.
   const isThinkingPhase = isTarsGenerating && generationInfo?.files.length === 0 && !content;
 

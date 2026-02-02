@@ -1,7 +1,7 @@
-# VOID 🌌
+# vONE 🌌
 ### Hyper-Intelligent Vercel Clone & Deployment Engine
 
-VOID is the premier deployment and environment orchestration platform for the **opendev-labs** ecosystem. It is a high-fidelity, intelligent clone of the Vercel experience, optimized for high-velocity software delivery and sovereign infrastructure management.
+vONE is the premier deployment and environment orchestration platform for the **opendev-labs** ecosystem. It is a high-fidelity, intelligent clone of the Vercel experience, optimized for high-velocity software delivery and sovereign infrastructure management.
 
 ---
 
@@ -21,7 +21,7 @@ VOID is the premier deployment and environment orchestration platform for the **
 
 ## 🚀 Getting Started
 
-VOID is tightly integrated with `opendev-labs.github.io` and serves as the management layer for all ecosystem products.
+vONE is tightly integrated with `opendev-labs.github.io` and serves as the management layer for all ecosystem products.
 
 ### Installation
 ```bash
@@ -41,7 +41,7 @@ npm run electron:dev
 
 ## 🏗 Architecture
 
-VOID follows a modern micro-kernel inspired architecture to ensure 100% uptime for your critical deployments.
+vONE follows a modern micro-kernel inspired architecture to ensure 100% uptime for your critical deployments.
 
 1. **Dashboard (React)**: High-fidelity user interface for intent-driven orchestration.
 2. **Void API (Express)**: The core logic layer for deployment routing and state management.
@@ -51,7 +51,7 @@ VOID follows a modern micro-kernel inspired architecture to ensure 100% uptime f
 ---
 
 ## 📜 Sovereign Registry
-VOID is part of the [opendev-labs](https://github.com/opendev-labs) intelligent network. 
+vONE is part of the [opendev-labs](https://github.com/opendev-labs) intelligent network. 
 
 **Powered by Void • Auto-deploy to GitHub**
 

@@ -35,7 +35,7 @@ export function ChatSessionView({
     onApiKeySave
 }: ChatSessionViewProps) {
   const lastMessage = session.messages[session.messages.length - 1];
-  const generationInfo: GenerationInfo | null = (lastMessage?.role === 'tars' && lastMessage.generationInfo) 
+  const generationInfo: GenerationInfo | null = (lastMessage?.role === 'vone' && lastMessage.generationInfo) 
     ? lastMessage.generationInfo 
     : null;
 

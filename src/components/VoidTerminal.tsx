@@ -17,7 +17,7 @@ export const VoidTerminal: React.FC = () => {
     useEffect(() => {
         // Initial welcome message from the "Mirror"
         if (history.length === 0) {
-            addOutput('VOID [Mirror v1.0.0] - opendev-labs', 'system');
+            addOutput('vONE [Mirror v1.0.0] - opendev-labs', 'system');
             addOutput('Connecting to local qvenv...', 'info');
             setTimeout(() => {
                 addOutput('Connection established. Quantum state: STABLE.', 'success');
@@ -75,7 +75,7 @@ export const VoidTerminal: React.FC = () => {
                 setHistory([]);
                 break;
             case 'void status':
-                addOutput('Scanning connection to local VOID core...', 'info');
+                addOutput('Scanning connection to local vONE core...', 'info');
                 setTimeout(() => addOutput('Core: ONLINE | Latency: <1ms (Entangled)', 'success'), 600);
                 break;
             case 'void stabilize':

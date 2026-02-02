@@ -1,4 +1,4 @@
-export const VOID_LANDING_PAGE_CODE = `
+export const vONE_LANDING_PAGE_CODE = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +82,7 @@ export const VOID_LANDING_PAGE_CODE = `
     <div class="grid"></div>
     <div class="glow"></div>
     <div class="container">
-        <h1>VOID</h1>
+        <h1>vONE</h1>
         <p>The next-generation serverless platform for modern developers. Deploy instantly, scale infinitely.</p>
         <a href="https://void-zero.web.app" class="btn">Get Started</a>
     </div>
@@ -120,7 +120,7 @@ export default function Home() {
 
 export const REAL_TEMPLATES: Record<string, Record<string, string>> = {
     'landing-page': {
-        'index.html': VOID_LANDING_PAGE_CODE
+        'index.html': vONE_LANDING_PAGE_CODE
     },
     'nextjs-starter': NEXTJS_STARTER_CODE,
     // default fallback

@@ -272,7 +272,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project, o
       branch: 'main',
       timestamp: new Date().toISOString(),
       status: DeploymentStatus.QUEUED,
-      url: currentProject.domains.find(d => d.isPrimary)?.name || `https://${currentProject.name}.void.app`,
+      url: currentProject.domains.find(d => d.isPrimary)?.name || `https://${currentProject.name}.vone.app`,
     };
 
     const newActivity: ActivityEvent = {
@@ -297,7 +297,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project, o
     const branchName = 'feat/new-feature';
     const shortHash = Math.random().toString(36).substring(2, 8);
     const urlFriendlyBranch = branchName.replace('/', '-');
-    const previewUrl = `https://${currentProject.name}-git-${urlFriendlyBranch}-${shortHash}.void.app`;
+    const previewUrl = `https://${currentProject.name}-git-${urlFriendlyBranch}-${shortHash}.vone.app`;
 
     const newDeployment: Deployment = {
       id: `dpl_${Date.now()}`,

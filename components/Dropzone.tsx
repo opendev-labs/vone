@@ -45,7 +45,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onNewDeployment }) => {
         branch: 'main',
         timestamp: new Date().toISOString(),
         status: DeploymentStatus.BUILDING,
-        url: `https://new-project-${Date.now().toString().slice(-5)}.void.app`,
+        url: `https://new-project-${Date.now().toString().slice(-5)}.vone.app`,
       };
       
       const newProject: Project = {

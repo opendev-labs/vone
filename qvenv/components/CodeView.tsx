@@ -520,7 +520,7 @@ export function CodeView({ session, setActiveFile, onFileContentChange, generati
                             <div className="flex flex-col items-center justify-center h-full text-neutral-600">
                                 <FileIcon className="h-12 w-12 mb-4" />
                                 <p className="text-sm font-medium">Select a file to view and edit</p>
-                                <p className="text-xs text-neutral-700 mt-1">Or ask TARS to generate one for you</p>
+                                <p className="text-xs text-neutral-700 mt-1">Or ask vONE to generate one for you</p>
                             </div>
                         )}
                     </main>

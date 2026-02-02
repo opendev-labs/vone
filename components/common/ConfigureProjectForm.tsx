@@ -40,7 +40,7 @@ export const ConfigureProjectForm: React.FC<ConfigureProjectFormProps> = ({ defa
                     autoFocus
                 />
                 <p className="text-xs text-zinc-500 mt-1">
-                    Your project will be deployed to <code className="text-zinc-400">{urlFriendlyName}.void.app</code>
+                    Your project will be deployed to <code className="text-zinc-400">{urlFriendlyName}.vone.app</code>
                 </p>
             </div>
             <div className="flex justify-end gap-2">
